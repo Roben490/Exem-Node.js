@@ -20,12 +20,12 @@ export const getAllUsers = async (req: Request, res: Response): Promise<void> =>
 
   export const getAllItemInStore = async (req: Request, res: Response): Promise<void> => {
     try {
-      const items = await missileData;
-      res.status(200).json(items);
+        const items = await missileData;
+        res.status(200).json(items);
     } catch (error) {
       console.error('cannot find users catch');
     }
-  };
+  }
 
   export const getAllItemInOrg = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -84,15 +84,14 @@ export const addNewUser = async (req: Request, res: Response): Promise<void> => 
   export const updateOrg = async (req: Request, res: Response): Promise<void> => {
     try {
       const updatedOrg = req.body;
-      console.log(updatedOrg);
       if (!updatedOrg) {
         res.status(400).json({ error: "Check yourself" });
         return;}
-      const Org: IOrganizations = await updateOrganization(updatedOrg, orgData);
+      const Org: IOrganizations = await updateOrganization(updatedOrg, orgData);      
       res.status(201).json(Org);
       return
     } catch (error) {
-      res.send("Updated not success" + error);
+      res.send("Updated not success: " + error);
       return
     }
-  };
+  }; 

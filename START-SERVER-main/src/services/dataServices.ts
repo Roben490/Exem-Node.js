@@ -4,6 +4,7 @@ import { generateAuthToken } from "../helpers/jwt"
 import { IUser } from "../models/User"
 import Users from '../models/User'
 import organization, { IOrganizations } from "../models/organization"
+import { log } from "node:console"
 
 export const getAllUsersServices = async ():  Promise<IUser[] | undefined> => {
     const data: IUser[] = await Users.find()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
@@ -21,17 +22,15 @@ export const addUser = async (user: IUser): Promise<IUser> => {
   }
 }
 
-export const updateOrganization = async (or: IOrganizations, allOrganization: IOrganizations[]): Promise<IOrganizations> => {
-    try {
-    let pastOrg = allOrganization.find((o) => o.name === or.name)
-    pastOrg = or
-    await pastOrg.save();
-    return pastOrg;
+export const updateOrganization = async (updatedOrg: IOrganizations, orgData: IOrganizations[]): Promise<IOrganizations> => {
+    try {      
+    const pastOrg = organization.findOne({ name: updatedOrg.name });
+    await pastOrg.updateOne({updatedOrg})
+    return updatedOrg; 
   } catch (error) {
     throw new Error("Failed to update Org");
   }
 }
-
 
 const cookieConfig: CookieOptions = {
     httpOnly: true,          // הגנה מפני XSS - הקוקי לא נגיש דרך JavaScript בצד הלקוח

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+import { IUser } from '../models/User';
 
 // Define interface for token payload
 interface TokenPayload {
@@ -47,8 +48,12 @@ const verifyUser = (req: Request, res: Response, next: NextFunction) => {
       algorithms: ['HS256']
     }) as TokenPayload;
 
+    console.log(decoded);
+    
+
     // Add decoded user to request
     (req as any).user = decoded;
+
 
     // Continue to next middleware
     next();
