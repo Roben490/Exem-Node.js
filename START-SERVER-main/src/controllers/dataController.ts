@@ -2,8 +2,9 @@ import express, { IRouter, Response } from 'express';
 import { Request } from 'express-serve-static-core';
 import mongoose from 'mongoose';
 import { IUser } from '../models/User';
-import { addUser, getAllUsersServices, login, logout, userDTO } from '../services/dataServices';
+import { addUser, getAllUsersServices, login, logout, updateOrganization, userDTO } from '../services/dataServices';
 import { missileData, orgData } from '../helpers/seed';
+import { IOrganizations } from '../models/organization';
 
 const router: IRouter = express.Router();
 
@@ -80,3 +81,18 @@ export const addNewUser = async (req: Request, res: Response): Promise<void> => 
     }
   };
 
+  export const updateOrg = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const updatedOrg = req.body;
+      console.log(updatedOrg);
+      if (!updatedOrg) {
+        res.status(400).json({ error: "Check yourself" });
+        return;}
+      const Org: IOrganizations = await updateOrganization(updatedOrg, orgData);
+      res.status(201).json(Org);
+      return
+    } catch (error) {
+      res.send("Updated not success" + error);
+      return
+    }
+  };

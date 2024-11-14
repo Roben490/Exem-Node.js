@@ -3,6 +3,7 @@ import { comparePassword, generateUserPassword } from "../helpers/bcrypt"
 import { generateAuthToken } from "../helpers/jwt"
 import { IUser } from "../models/User"
 import Users from '../models/User'
+import organization, { IOrganizations } from "../models/organization"
 
 export const getAllUsersServices = async ():  Promise<IUser[] | undefined> => {
     const data: IUser[] = await Users.find()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
@@ -17,6 +18,17 @@ export const addUser = async (user: IUser): Promise<IUser> => {
     return newUser;
   } catch (error) {
     throw new Error("Failed to add new user");
+  }
+}
+
+export const updateOrganization = async (or: IOrganizations, allOrganization: IOrganizations[]): Promise<IOrganizations> => {
+    try {
+    let pastOrg = allOrganization.find((o) => o.name === or.name)
+    pastOrg = or
+    await pastOrg.save();
+    return pastOrg;
+  } catch (error) {
+    throw new Error("Failed to update Org");
   }
 }
 
@@ -44,7 +56,6 @@ export const login = async (user: userDTO, res:Response) => {
         if (!isPasswordCorrect) return console.log("Incorrect password or Email");
         const {_id, organization } = foundUser
         const token = generateAuthToken( _id );
-        console.log(token);
         res.cookie('token', token, cookieConfig);
         return {foundUser , token};
     } catch (error) {
