@@ -25,13 +25,14 @@ export const addUser = async (user: IUser): Promise<IUser> => {
 export const updateOrganization = async (updatedOrg: IOrganizations, orgData: IOrganizations[]): Promise<IOrganizations> => {
     try {      
     const pastOrg = organization.findOne({ name: updatedOrg.name });
-    await pastOrg.updateOne({updatedOrg})
+    organization.updateOne({ pastOrg: updatedOrg});
+    // await pastOrg.updateOne({pastOrg: updatedOrg });
     return updatedOrg;
   } catch (error) {
     throw new Error("Failed to update Org"); 
   }
 }
-
+ 
 const cookieConfig: CookieOptions = {
     httpOnly: true,          // הגנה מפני XSS - הקוקי לא נגיש דרך JavaScript בצד הלקוח
     secure: true,            // שליחת הקוקי רק בחיבור HTTPS

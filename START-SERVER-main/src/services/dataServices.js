@@ -28,7 +28,8 @@ exports.addUser = addUser;
 const updateOrganization = async (updatedOrg, orgData) => {
     try {
         const pastOrg = organization_1.default.findOne({ name: updatedOrg.name });
-        await pastOrg.updateOne({ updatedOrg });
+        organization_1.default.updateOne({ pastOrg: updatedOrg });
+        // await pastOrg.updateOne({pastOrg: updatedOrg });
         return updatedOrg;
     }
     catch (error) {
