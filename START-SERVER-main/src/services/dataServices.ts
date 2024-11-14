@@ -26,9 +26,9 @@ export const updateOrganization = async (updatedOrg: IOrganizations, orgData: IO
     try {      
     const pastOrg = organization.findOne({ name: updatedOrg.name });
     await pastOrg.updateOne({updatedOrg})
-    return updatedOrg; 
+    return updatedOrg;
   } catch (error) {
-    throw new Error("Failed to update Org");
+    throw new Error("Failed to update Org"); 
   }
 }
 

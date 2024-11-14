@@ -2,18 +2,17 @@ import mongoose, { Document, Schema } from "mongoose";
 
 export interface IOrganizations extends Document {
   name: string,
-  resources: resources[],
+  resources: [{
+    name: string,
+    amount: number
+  }],
   budget: number,
 }
 
-export interface resources {
-    name: string,
-    amount: number
-}
 
 const organizationSchema: Schema = new Schema({
   name: { type: String, required: true, unique: true },
-  resources: { type: { type: [Schema.Types.ObjectId] } }, //????????????
+  resources: { type: [{ name: String, amount: Number }] }, //????????????
   budget: { type: Number, required: true },
 });
 
